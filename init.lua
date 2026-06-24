@@ -39,7 +39,7 @@ What is Kickstart?
     After understanding a bit more about Lua, you can use `:help lua-guide` as a
     reference for how Neovim integrates Lua.
     - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
+    - or HTML version: https://neovim.io/doc/user/lua-guide.html
 
 Kickstart Guide:
 
@@ -283,25 +283,42 @@ require('lazy').setup({
       },
     },
   },
-
-  --  { -- Seemless navigation between tmux and nvim
-  --    'christoomey/vim-tmux-navigator',
-  --    cmd = {
-  --      'TmuxNavigateLeft',
-  --      'TmuxNavigateDown',
-  --      'TmuxNavigateUp',
-  --      'TmuxNavigateRight',
-  --      'TmuxNavigatePrevious',
-  --      'TmuxNavigatorProcessList',
-  --    },
-  --    keys = {
-  --      { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
-  --      { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
-  --      { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
-  --      { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
-  --      { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
-  --    },
-  --  },
+  { -- Seemless navigation between tmux and nvim
+    'christoomey/vim-tmux-navigator',
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+      'TmuxNavigatorProcessList',
+    },
+    keys = {
+      { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
+      { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
+      { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
+      { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
+      { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+    },
+  },
+  { -- luarocks
+    'vhyrro/luarocks.nvim',
+    priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+    config = true,
+    -- opts = {
+    -- rocks = { rocks },
+    -- }
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons', -- optional, but recommended
+    },
+    lazy = false, -- neo-tree will lazily load itself
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
