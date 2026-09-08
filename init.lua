@@ -166,9 +166,6 @@ vim.o.scrolloff = 15
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -180,10 +177,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
 --
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
 -- TIP: Disable arrow keys in normal mode
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -207,6 +200,13 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- LazyVim keybind
 vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })
+
+-- Neotree keybinds
+vim.keymap.set('n', '<leader>n', '<cmd>Neotree toggle<cr>', { desc = '[N]eotree' })
+
+-- Terminal keybinds
+vim.keymap.set('n', '<leader>tt', '<cmd>vsplit | terminal<cr>', { desc = '[T]erminal' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Source nvim config
 vim.keymap.set('n', '<leader>rc', '<cmd>source $MYVIMRC<cr>', { desc = '[R]eload [C]onfig' })
@@ -255,6 +255,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-obsession', -- Resurrect neovim sessions (tmux resurrect compatible)
+  'tpope/vim-dadbod', -- Interact with databases
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
