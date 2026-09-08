@@ -205,6 +205,12 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- LazyVim keybind
+vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })
+
+-- Source nvim config
+vim.keymap.set('n', '<leader>rc', '<cmd>source $MYVIMRC<cr>', { desc = '[R]eload [C]onfig' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -248,7 +254,7 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-obsession',
+  'tpope/vim-obsession', -- Resurrect neovim sessions (tmux resurrect compatible)
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -311,12 +317,12 @@ require('lazy').setup({
     -- }
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons', -- optional, but recommended
     },
     lazy = false, -- neo-tree will lazily load itself
   },
