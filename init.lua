@@ -173,10 +173,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
 -- TIP: Disable arrow keys in normal mode
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -192,12 +188,6 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
-
 -- LazyVim keybind
 vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })
 
@@ -205,7 +195,7 @@ vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })
 vim.keymap.set('n', '<leader>n', '<cmd>Neotree toggle<cr>', { desc = '[N]eotree' })
 
 -- Terminal keybinds
-vim.keymap.set('n', '<leader>tt', '<cmd>vsplit | terminal<cr>', { desc = '[T]erminal' })
+vim.keymap.set('n', '<leader>tt', '<cmd>tab terminal<cr>', { desc = '[T]erminal' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Source nvim config
@@ -240,22 +230,11 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
---
---  To check the current status of your plugins, run
---    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins you can run
---    :Lazy update
---
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-obsession', -- Resurrect neovim sessions (tmux resurrect compatible)
-  'tpope/vim-dadbod', -- Interact with databases
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -293,6 +272,9 @@ require('lazy').setup({
   },
   { -- Seemless navigation between tmux and nvim
     'christoomey/vim-tmux-navigator',
+    init = function()
+      vim.g.tmux_navigator_no_mappings = 1
+    end,
     cmd = {
       'TmuxNavigateLeft',
       'TmuxNavigateDown',
@@ -302,11 +284,15 @@ require('lazy').setup({
       'TmuxNavigatorProcessList',
     },
     keys = {
-      { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
-      { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
-      { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
-      { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
-      { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+      { '<c-h>', '<cmd>TmuxNavigateLeft<cr>' },
+      { '<c-j>', '<cmd>TmuxNavigateDown<cr>' },
+      { '<c-k>', '<cmd>TmuxNavigateUp<cr>' },
+      { '<c-l>', '<cmd>TmuxNavigateRight<cr>' },
+      { '<c-\\>', '<cmd>TmuxNavigatePrevious<cr>' },
+      { '<c-h>', '<cmd>TmuxNavigateLeft<cr>', mode = 't' },
+      { '<c-j>', '<cmd>TmuxNavigateDown<cr>', mode = 't' },
+      { '<c-k>', '<cmd>TmuxNavigateUp<cr>', mode = 't' },
+      { '<c-l>', '<cmd>TmuxNavigateRight<cr>', mode = 't' },
     },
   },
   { -- luarocks
@@ -317,7 +303,7 @@ require('lazy').setup({
     -- rocks = { rocks },
     -- }
   },
-  {
+  { -- Neotree
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v3.x',
     dependencies = {
@@ -502,6 +488,27 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+  { -- Dadbob
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      { 'tpope/vim-dadbod', lazy = true },
+      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
+    },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+    keys = {
+      { '<leader>d', '<cmd>tab DBUI<cr>', desc = '[D]BUI' },
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+      vim.g.db_ui_hide_schemas = { 'information_schema', 'mysql', 'performance_schema', 'sys' }
     end,
   },
 
