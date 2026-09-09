@@ -191,9 +191,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- LazyVim keybind
 vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })
 
--- Neotree keybinds
-vim.keymap.set('n', '<leader>n', '<cmd>Neotree toggle<cr>', { desc = '[N]eotree' })
-
 -- Terminal keybinds
 vim.keymap.set('n', '<leader>tt', '<cmd>tab terminal<cr>', { desc = '[T]erminal' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -302,16 +299,6 @@ require('lazy').setup({
     -- opts = {
     -- rocks = { rocks },
     -- }
-  },
-  { -- Neotree
-    'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v3.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons', -- optional, but recommended
-    },
-    lazy = false, -- neo-tree will lazily load itself
   },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -1027,7 +1014,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
