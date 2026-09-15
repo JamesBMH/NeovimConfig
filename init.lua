@@ -895,8 +895,15 @@ require('lazy').setup({
 
       sources = {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        -- Add vim-dadbod-completion's native source on top of the defaults for SQL buffers
+        per_filetype = {
+          sql = { 'lsp', 'path', 'snippets', 'dadbod' },
+          mysql = { 'lsp', 'path', 'snippets', 'dadbod' },
+          plsql = { 'lsp', 'path', 'snippets', 'dadbod' },
+        },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         },
       },
 
