@@ -21,6 +21,9 @@ return {
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
+    -- Shows variable values as virtual text while debugging
+    'theHamsta/nvim-dap-virtual-text',
+
     -- Add your own debuggers here
   },
   keys = {
@@ -144,6 +147,8 @@ return {
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+    require('nvim-dap-virtual-text').setup()
 
     -- Install PHP specific config
     dap.adapters.php = {
